@@ -1,0 +1,57 @@
+{
+  "name": "paint-pwa",
+  "version": "1.0.0",
+  "contributors": [
+    "Christian Sterzl <christian.sterzl@gmail.com>"
+  ],
+  "license": "GPL-3.0-or-later",
+  "repository": "Waxolunist/paint",
+  "scripts": {
+    "start": "npm run serve:prpl-server",
+    "build": "npm run build:prpl-server && npm run build:static",
+    "build:prpl-server": "`npm bin`/polymer build --auto-base-path && `npm bin`/gulp prpl-server",
+    "build:static": "`npm bin`/polymer build",
+    "serve:prpl-server": "`npm bin`/prpl-server --root server/build --host 0.0.0.0 --https-redirect",
+    "serve:static": "polymer serve --port 5000 build/es5-bundled",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:integration": "mocha test/integration --timeout=10000",
+    "test:unit": "polymer test --module-resolution=node --npm",
+    "test:sauce": "polymer test --module-resolution=node --npm -s 'windows 10/microsoftedge@17' -s 'macos 10.13/safari@11'",
+    "test:regenerate_screenshots": "mocha test/integration/screenshots-baseline/regenerate.js --timeout=15000",
+    "deploy": "gcloud app deploy server/app.yaml",
+    "postinstall": "npm run build:prpl-server",
+    "dev": "polymer serve"
+  },
+  "dependencies": {
+    "@polymer/lit-element": "^0.5.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "pwa-helpers": "^0.8.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1"
+  },
+  "devDependencies": {
+    "axe-core": "^3.0.0",
+    "chai": "^4.1.2",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-rename": "^1.2.3",
+    "gulp-replace": "^1.0.0",
+    "http2-push-manifest": "^1.0.1",
+    "mocha": "^5.2.0",
+    "pixelmatch": "^4.0.2",
+    "polymer-cli": "^1.9.11",
+    "polyserve": "^0.27.15",
+    "prpl-server": "^1.1.0",
+    "puppeteer": "^1.20.0",
+    "wct-browser-legacy": "^1.0.1"
+  },
+  "engines": {
+    "node": "8.x",
+    "npm": "6.x"
+  },
+  "cloud-repo-tools": {
+    "requiresKeyFile": true,
+    "requiresProjectId": true
+  }
+}
